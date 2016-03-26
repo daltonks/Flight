@@ -1,0 +1,39 @@
+uniform vec3 sunPositionInView;
+uniform vec3 colorMult;
+uniform mat4 MVPMatrix;
+uniform mat4 MVMatrix;
+
+attribute vec3 position;
+attribute vec3 colorIn;
+attribute vec3 normal;
+//attribute vec2 texCoordinateIn;
+
+varying vec4 colorOut;
+//varying vec2 texCoordinateOut;
+
+void main() {
+    vec3 centerInView = vec3(MVMatrix * vec4(0, 0, 0, 1.0));
+    vec3 normalInView = normalize(vec3(MVMatrix * vec4(normal, 0.0)));
+
+    vec3 vectorToSun = sunPositionInView - centerInView;
+    float distanceToSun = length(vectorToSun);
+    float minDiffuse = 0.6;
+    float brighterDistance = 13000.0;
+    if(distanceToSun < brighterDistance) {
+        minDiffuse = minDiffuse + ((brighterDistance - distanceToSun) / brighterDistance) * (1.0 - minDiffuse);
+    }
+
+    float diffuse = max(dot(normalInView, normalize(vectorToSun)), 0.0);
+    diffuse = minDiffuse + diffuse * (1.0 - minDiffuse);
+
+    //if(distanceToSun > .1) {
+    //    vec3 forward = vec3(0.0, 0.0, -1.0);
+    //    float angleLookingAtSun = max(dot(forward, normalize(sunPositionInView)) - .5, 0.0);
+    //    diffuse *= (1.0 - angleLookingAtSun);
+    //}
+
+    colorOut = vec4(colorIn, 1) * vec4(colorMult, 1) * diffuse;
+    gl_Position = MVPMatrix * vec4(position, 1);
+
+    //texCoordinateOut = texCoordinateIn;
+}

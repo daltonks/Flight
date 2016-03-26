@@ -1,0 +1,40 @@
+pointedcursor
+scale: .3
+
+sun
+collisionModels: SPHERE
+
+earthlike*5
+collisionModels: SPHERE
+
+plane
+scale: 2
+collisionModels: SPHERE
+mass: 1
+
+moon*5
+collisionModels: SPHERE
+
+spacedust
+renderBothSides: true
+
+fourtriangleprimitive
+collisionModels: SPHERE
+scale: 5
+
+basicbullet
+mass: .01
+scale: 10
+collisionModels: SPHERE
+
+itemslot
+scale: .33
+
+tutorialplanetoid
+collisionModels: SPHERE
+
+backarrow
+scale: .5
+
+ingamemenubutton
+scale: .35

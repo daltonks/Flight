@@ -1,0 +1,11 @@
+precision mediump float;
+
+//uniform sampler2D texSampler;
+
+varying vec4 colorOut;
+//varying vec2 texCoordinateOut;
+
+void main() {
+    gl_FragColor = colorOut;
+    //texture2D(texSampler, texCoordinateOut);
+}

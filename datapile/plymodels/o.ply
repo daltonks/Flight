@@ -1,0 +1,29 @@
+ply
+format ascii 1.0
+comment Created by Blender 2.75 (sub 0) - www.blender.org, source file: 'letters.blend'
+element vertex 8
+property float x
+property float y
+property float z
+property float nx
+property float ny
+property float nz
+element face 8
+property list uchar uint vertex_indices
+end_header
+-0.280979 0.713464 -0.000000 0.000000 -0.000000 1.000000
+0.254415 0.763551 -0.000000 0.000000 -0.000000 1.000000
+0.441290 0.958727 -0.000000 0.000000 -0.000000 1.000000
+0.326716 -0.742207 -0.000000 0.000000 0.000000 1.000000
+0.498007 -0.926349 -0.000000 0.000000 0.000000 1.000000
+-0.498007 -1.000058 0.000000 0.000000 -0.000000 1.000000
+-0.467460 0.891428 0.000000 0.000000 0.000000 1.000000
+-0.321706 -0.777999 -0.000000 0.000000 0.000000 1.000000
+3 0 1 2
+3 1 3 4
+3 5 4 3
+3 6 5 7
+3 6 0 2
+3 2 1 4
+3 7 5 3
+3 0 6 7

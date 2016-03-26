@@ -1,0 +1,3 @@
+mainmenu, com.github.daltonks.game.subactivities.MainMenuEngineState
+game, com.github.daltonks.game.subactivities.GameEngineState
+map, com.github.daltonks.game.subactivities.MapEngineState

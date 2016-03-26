@@ -1,0 +1,7 @@
+plane
+rotVelocityMax: 300
+forwardForceMax: 130
+lowerSpeedRange: 300
+maxHealth: 16
+linearDamping: .9
+angularDamping: .95
