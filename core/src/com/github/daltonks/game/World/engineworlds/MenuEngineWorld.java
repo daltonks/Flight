@@ -1,9 +1,9 @@
 package com.github.daltonks.game.World.engineworlds;
 
 import com.github.daltonks.engine.states.EngineState;
-import com.github.daltonks.engine.states.touchevents.DownTouchEvent;
-import com.github.daltonks.engine.states.touchevents.MoveTouchEvent;
-import com.github.daltonks.engine.states.touchevents.UpTouchEvent;
+import com.github.daltonks.engine.states.inputevents.ClickDownEvent;
+import com.github.daltonks.engine.states.inputevents.DragEvent;
+import com.github.daltonks.engine.states.inputevents.ClickUpEvent;
 import com.github.daltonks.engine.util.Vec3d;
 import com.github.daltonks.engine.world.camera.RotateAroundCameraMode;
 
@@ -23,37 +23,22 @@ public class MenuEngineWorld extends SpaceEngineWorld {
     }
 
     @Override
-    public void onFingerDown(DownTouchEvent event) {
-
-    }
-
-    @Override
-    public void onFingersMove(MoveTouchEvent event) {
-
-    }
-
-    @Override
-    public void onFingerUp(UpTouchEvent event) {
-
-    }
-
-    @Override
-    public void onEnterSubActivity() {
-
-    }
-
-    @Override
-    public void onLeaveSubActivity() {
-
-    }
-
-    @Override
-    public void onActivityPause() {
-
-    }
-
-    @Override
     protected boolean shouldCreateRigidBodies() {
         return false;
+    }
+
+    @Override
+    public void onEnterState() {
+
+    }
+
+    @Override
+    public void onLeaveState() {
+
+    }
+
+    @Override
+    public void onPause() {
+
     }
 }

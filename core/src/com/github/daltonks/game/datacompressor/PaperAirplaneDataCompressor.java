@@ -22,8 +22,8 @@ public class PaperAirplaneDataCompressor extends Compressor {
     }
 
     public PaperAirplaneDataCompressor() throws IOException {
-        super("C:/Users/Dalton/Dropbox/AndroidWorkspace/MyApplication/datapile/",
-              "C:/Users/Dalton/Dropbox/AndroidWorkspace/MyApplication/app/src/main/res/raw/data.pile");
+        super("C:/Users/Dalton/libgdxproject/datapile/",
+              "C:/Users/Dalton/libgdxproject/android/assets/data/data.pile");
     }
 
     @Override

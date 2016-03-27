@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class Items {
     public static Item BASIC_BULLET_SHOOTER;
 
-    private static HashMap<Short, Item> idsAndItems = new HashMap<>();
+    private static HashMap<Short, Item> idsAndItems = new HashMap<Short, Item>();
 
     public static void init() {
         Model itemSlotModel = Models.get("itemslot");

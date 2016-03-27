@@ -1,11 +1,12 @@
 package com.github.daltonks.game.World.engineworlds;
 
-import android.opengl.GLES20;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.github.daltonks.engine.states.EngineState;
-import com.github.daltonks.engine.states.touchevents.DownTouchEvent;
-import com.github.daltonks.engine.states.touchevents.FingerTracker;
-import com.github.daltonks.engine.states.touchevents.MoveTouchEvent;
-import com.github.daltonks.engine.states.touchevents.UpTouchEvent;
+import com.github.daltonks.engine.states.inputevents.ClickDownEvent;
+import com.github.daltonks.engine.states.inputevents.ClickTracker;
+import com.github.daltonks.engine.states.inputevents.DragEvent;
+import com.github.daltonks.engine.states.inputevents.ClickUpEvent;
 import com.github.daltonks.engine.util.*;
 import com.github.daltonks.engine.world.camera.SwingingFollowCameraMode;
 import com.github.daltonks.engine.world.entityComponent.entities.base.Entity;
@@ -25,7 +26,7 @@ public class GameEngineWorld extends SpaceEngineWorld {
     private Entity planetoidTraveledToLast;
     private Player player;
     private SwingingFollowCameraMode cameraMode;
-    private SortedList<LivingEntity> livingEntities = new SortedList<>(100);
+    private SortedList<LivingEntity> livingEntities = new SortedList<LivingEntity>(100);
 
     public GameEngineWorld(EngineState engineState) {
         super(engineState);
@@ -69,13 +70,13 @@ public class GameEngineWorld extends SpaceEngineWorld {
         updateSunAndDrawSkybox();
 
         //Enable stencil for living entity outlines
-        Gdx.gl.glEnable(Gdx.gl.GL_STENCIL_TEST);
+        Gdx.gl.glEnable(GL20.GL_STENCIL_TEST);
         Gdx.gl.glColorMask(false, false, false, false);
         Gdx.gl.glDepthMask(false);
-        Gdx.gl.glStencilFunc(Gdx.gl.GL_NEVER, 1, 0xFF);
-        Gdx.gl.glStencilOp(Gdx.gl.GL_REPLACE, Gdx.gl.GL_KEEP, Gdx.gl.GL_KEEP);
+        Gdx.gl.glStencilFunc(GL20.GL_NEVER, 1, 0xFF);
+        Gdx.gl.glStencilOp(GL20.GL_REPLACE, GL20.GL_KEEP, GL20.GL_KEEP);
         Gdx.gl.glStencilMask(0xFF);
-        Gdx.gl.glClear(Gdx.gl.GL_STENCIL_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_STENCIL_BUFFER_BIT);
 
         ArrayList<LivingEntity> livingList = livingEntities.getUnderlyingList();
 
@@ -96,21 +97,21 @@ public class GameEngineWorld extends SpaceEngineWorld {
         //Draw outline
         camera.useFarProjectionMatrix();
         Gdx.gl.glStencilMask(0x00);
-        Gdx.gl.glStencilFunc(Gdx.gl.GL_EQUAL, 0, 0xFF);
+        Gdx.gl.glStencilFunc(GL20.GL_EQUAL, 0, 0xFF);
         for(int i = 0; i < livingList.size(); i++) {
             livingList.get(i).drawOutline(camera);
         }
-        Gdx.gl.glDisable(Gdx.gl.GL_STENCIL_TEST);
+        Gdx.gl.glDisable(GL20.GL_STENCIL_TEST);
         drawFar();
 
-        Gdx.gl.glClear(Gdx.gl.GL_DEPTH_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
 
         camera.useNearProjectionMatrix();
-        Gdx.gl.glEnable(Gdx.gl.GL_STENCIL_TEST);
+        Gdx.gl.glEnable(GL20.GL_STENCIL_TEST);
         for(int i = 0; i < livingList.size(); i++) {
             livingList.get(i).drawOutline(camera);
         }
-        Gdx.gl.glDisable(Gdx.gl.GL_STENCIL_TEST);
+        Gdx.gl.glDisable(GL20.GL_STENCIL_TEST);
         drawNear();
     }
 
@@ -166,17 +167,17 @@ public class GameEngineWorld extends SpaceEngineWorld {
     }
 
     @Override
-    public void onFingerDown(DownTouchEvent event) {
+    public void onClickDown(ClickDownEvent event) {
 
     }
 
     private static float turnDiv = 80;
     @Override
-    public void onFingersMove(MoveTouchEvent event) {
+    public void onDrag(DragEvent event) {
         Vec3d throttle = Pools.getVec3d().set(0, 0, 0);
-        for(int i = 0; i < event.getFingerTrackers().size(); i++) {
-            FingerTracker tracker = event.getFingerTrackers().get(i);
-            if(tracker.startingX <= Util.getDisplayWidth() / 2) {
+        for(int i = 0; i < event.getClickTrackers().size(); i++) {
+            ClickTracker tracker = event.getClickTrackers().get(i);
+            if(tracker.startingX <= Gdx.graphics.getWidth() / 2) {
                 //Roll if on left side of screen
                 throttle.add(-tracker.getDeltaY() / turnDiv, tracker.getDeltaX() / turnDiv, 0);
             } else {
@@ -189,21 +190,21 @@ public class GameEngineWorld extends SpaceEngineWorld {
     }
 
     @Override
-    public void onFingerUp(UpTouchEvent event) {
+    public void onClickUp(ClickUpEvent event) {
 
     }
 
     @Override
-    public void onEnterSubActivity() {
+    public void onEnterState() {
 
     }
     @Override
-    public void onLeaveSubActivity() {
+    public void onLeaveState() {
 
     }
 
     @Override
-    public void onActivityPause() {
+    public void onPause() {
 
     }
 

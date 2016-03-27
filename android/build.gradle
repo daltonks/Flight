@@ -16,8 +16,8 @@ android {
     }
     defaultConfig {
         applicationId "com.github.daltonks"
-        minSdkVersion 8
-        targetSdkVersion 20
+        minSdkVersion 17
+        targetSdkVersion 23
     }
 }
 // called every time gradle gets executed, takes the native dependencies of
@@ -78,8 +78,8 @@ eclipse {
     }
 
     jdt {
-        sourceCompatibility = 1.6
-        targetCompatibility = 1.6
+        sourceCompatibility = 1.7
+        targetCompatibility = 1.7
     }
 
     classpath {

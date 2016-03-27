@@ -7,6 +7,8 @@ import com.github.daltonks.engine.Engine;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new Engine(), config);
+        config.stencil = 8;
+		config.samples = 4;
+        new LwjglApplication(new Engine(), config);
 	}
 }

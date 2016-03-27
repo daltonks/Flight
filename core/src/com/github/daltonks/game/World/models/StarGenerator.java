@@ -2,7 +2,7 @@
 
 package com.github.daltonks.game.World.models;
 
-import android.opengl.GLES20;
+import com.badlogic.gdx.graphics.GL20;
 import com.github.daltonks.engine.util.EngineMath;
 import com.github.daltonks.engine.util.Pools;
 import com.github.daltonks.engine.util.Vec3d;
@@ -15,13 +15,13 @@ public class StarGenerator {
     public static void initStars() {
         Model starModel = new Model("stars");
 
-        int[] indices = new int[TOTAL_STARS * 3];
-        for(int i = 0; i < indices.length; i++) {
+        short[] indices = new short[TOTAL_STARS * 3];
+        for(short i = 0; i < indices.length; i++) {
             indices[i] = i;
         }
-        starModel.updateIndicesAndDrawingMode(indices, Gdx.gl.GL_TRIANGLES);
+        starModel.updateIndicesAndDrawingMode(indices, GL20.GL_TRIANGLES);
 
-        starModel.updateNumOfVertices(TOTAL_STARS * 3);
+        starModel.setNumOfVertices(TOTAL_STARS * 3);
 
         for(int i = 0; i < TOTAL_STARS; i++) {
             Vec3d loc = EngineMath.getRandomPointOnSphereSurfaceNew(800);

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class LivingEntityInfoConverter extends Converter {
 
-    private ArrayList<ModelIDAndAIInfo> aiInfos = new ArrayList<>();
+    private ArrayList<ModelIDAndAIInfo> aiInfos = new ArrayList<ModelIDAndAIInfo>();
 
     @Override
     public void read(String inputDirectory) throws IOException {

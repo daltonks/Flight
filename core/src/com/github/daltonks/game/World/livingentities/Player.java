@@ -10,7 +10,7 @@ import com.github.daltonks.engine.world.models.Models;
 import com.github.daltonks.engine.world.physics.CollisionHandler;
 import com.github.daltonks.game.World.physics.CollisionMasks;
 import com.github.daltonks.game.datacompressor.LivingEntityInfo;
-import com.github.daltonks.game.subactivities.GameEngineState;
+import com.github.daltonks.game.states.GameEngineState;
 
 public class Player extends LivingEntity {
     private static LivingEntityInfo planeEntityInfo = LivingEntityInfos.getInfo(Models.get("plane"));

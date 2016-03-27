@@ -1,11 +1,12 @@
 package com.github.daltonks.game.World.engineworlds;
 
-import android.opengl.GLES20;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.github.daltonks.engine.states.EngineState;
-import com.github.daltonks.engine.states.touchevents.DownTouchEvent;
-import com.github.daltonks.engine.states.touchevents.FingerTracker;
-import com.github.daltonks.engine.states.touchevents.MoveTouchEvent;
-import com.github.daltonks.engine.states.touchevents.UpTouchEvent;
+import com.github.daltonks.engine.states.inputevents.ClickDownEvent;
+import com.github.daltonks.engine.states.inputevents.ClickTracker;
+import com.github.daltonks.engine.states.inputevents.DragEvent;
+import com.github.daltonks.engine.states.inputevents.ClickUpEvent;
 import com.github.daltonks.engine.util.Color;
 import com.github.daltonks.engine.util.Pools;
 import com.github.daltonks.engine.util.Vec3d;
@@ -14,7 +15,7 @@ import com.github.daltonks.engine.world.camera.ViewMatrix;
 import com.github.daltonks.engine.world.entityComponent.components.transformComponents.TransformComponent;
 import com.github.daltonks.engine.world.entityComponent.entities.base.ModelEntity;
 import com.github.daltonks.engine.world.models.Models;
-import com.github.daltonks.game.subactivities.CursorDrawing;
+import com.github.daltonks.game.states.CursorDrawing;
 
 import java.util.LinkedList;
 
@@ -37,35 +38,35 @@ public class MapEngineWorld extends SpaceEngineWorld {
 
     protected void drawNear() {
         super.drawNear();
-        Gdx.gl.glDisable(Gdx.gl.GL_DEPTH_TEST);
+        Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
         CursorDrawing.drawCursor(getEngineState(), paperPlane, Color.PLAYER_BLUE, getCamera(), 3, 1, true);
-        Gdx.gl.glEnable(Gdx.gl.GL_DEPTH_TEST);
+        Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
     }
 
     protected void drawFar() {
         super.drawNear();
-        Gdx.gl.glDisable(Gdx.gl.GL_DEPTH_TEST);
+        Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
         CursorDrawing.drawCursor(getEngineState(), paperPlane, Color.PLAYER_BLUE, getCamera(), 3, 1, true);
-        Gdx.gl.glEnable(Gdx.gl.GL_DEPTH_TEST);
+        Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
     }
 
     @Override
-    public void onFingerDown(DownTouchEvent event) {
+    public void onClickDown(ClickDownEvent event) {
 
     }
 
     private static double mapMoveSpeed = .002;
     private static double minZ = 1, maxZ = 1000000;
     @Override
-    public void onFingersMove(MoveTouchEvent event) {
-        LinkedList<FingerTracker> fingerTrackers = event.getFingerTrackers();
+    public void onDrag(DragEvent event) {
+        LinkedList<ClickTracker> clickTrackers = event.getClickTrackers();
         Vec3d cameraLocation = getCamera().getViewMatrix().getLocation();
         double speed = mapMoveSpeed * cameraLocation.z();
         ViewMatrix viewMatrix = getCamera().getViewMatrix();
-        if(fingerTrackers.size() == 1) {
-            FingerTracker fingerTracker = fingerTrackers.get(0);
+        if(clickTrackers.size() == 1) {
+            ClickTracker clickTracker = clickTrackers.get(0);
             Vec3d loc = cameraLocation.clone();
-            loc.add(-fingerTracker.getDeltaX() * speed, fingerTracker.getDeltaY() * speed, 0);
+            loc.add(-clickTracker.getDeltaX() * speed, clickTracker.getDeltaY() * speed, 0);
             viewMatrix.setLocation(loc);
             Pools.recycle(loc);
         } else {
@@ -85,12 +86,12 @@ public class MapEngineWorld extends SpaceEngineWorld {
     }
 
     @Override
-    public void onFingerUp(UpTouchEvent event) {
+    public void onClickUp(ClickUpEvent event) {
 
     }
 
     @Override
-    public void onEnterSubActivity() {
+    public void onEnterState() {
         TransformComponent playerTransform = GameEngineWorld.INSTANCE.getPlayer().getTransformComponent();
         Vec3d playerLoc = playerTransform.getLocation();
         paperPlane.getTransformComponent().set(playerTransform);
@@ -101,12 +102,12 @@ public class MapEngineWorld extends SpaceEngineWorld {
     }
 
     @Override
-    public void onLeaveSubActivity() {
+    public void onLeaveState() {
 
     }
 
     @Override
-    public void onActivityPause() {
+    public void onPause() {
 
     }
 

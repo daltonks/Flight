@@ -1,6 +1,7 @@
 package com.github.daltonks.game.World.items.base;
 
-import android.opengl.GLES20;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.github.daltonks.engine.states.EngineState;
 import com.github.daltonks.engine.world.camera.Camera;
 import com.github.daltonks.engine.world.entityComponent.entities.base.Entity;
@@ -24,9 +25,9 @@ public class ItemSlot extends UIEntity {
         super.draw(camera);
         ItemStack itemStack = getItemStack();
         if(itemStack != null) {
-            Gdx.gl.glDisable(Gdx.gl.GL_DEPTH_TEST);
+            Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
             itemStack.draw(camera, getTransformComponent());
-            Gdx.gl.glEnable(Gdx.gl.GL_DEPTH_TEST);
+            Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
         }
     }
 

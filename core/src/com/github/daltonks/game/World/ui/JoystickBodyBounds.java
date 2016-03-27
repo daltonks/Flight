@@ -4,7 +4,7 @@ import com.github.daltonks.engine.util.Pools;
 import com.github.daltonks.engine.util.Vec3d;
 import com.github.daltonks.engine.world.entityComponent.entities.base.Entity;
 import com.github.daltonks.engine.world.ui.UIBoundsComponent;
-import com.github.daltonks.game.subactivities.GameEngineState;
+import com.github.daltonks.game.states.GameEngineState;
 
 public class JoystickBodyBounds extends UIBoundsComponent {
 

@@ -11,7 +11,7 @@ import java.io.DataInput;
 import java.util.HashMap;
 
 public class LivingEntityInfos {
-    private static HashMap<Model, LivingEntityInfo> livingEntityInfos = new HashMap<>();
+    private static HashMap<Model, LivingEntityInfo> livingEntityInfos = new HashMap<Model, LivingEntityInfo>();
 
     public static void init() {
         DataInput input = Engine.INSTANCE.getDataPileInputStream();

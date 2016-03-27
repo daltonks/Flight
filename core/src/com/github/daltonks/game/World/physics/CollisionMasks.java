@@ -3,11 +3,11 @@
 package com.github.daltonks.game.World.physics;
 
 public class CollisionMasks {
-    public static final byte WORLD = 0b00000001;
-    public static final byte ALLY = 0b00000010;
-    public static final byte ALLY_ATTACK = 0b00000100;
-    public static final byte ENEMY = 0b00001000;
-    public static final byte ENEMY_ATTACK = 0b00010000;
+    public static final byte WORLD = 1;
+    public static final byte ALLY = 2;
+    public static final byte ALLY_ATTACK = 4;
+    public static final byte ENEMY = 8;
+    public static final byte ENEMY_ATTACK = 16;
 
     //Doesn't collide with team attacks
     public static byte getEntityCollidesWithMask(byte team) {

@@ -1,11 +1,12 @@
 package com.github.daltonks.game.World.saveandload;
 
-import android.content.Context;
+import com.badlogic.gdx.Gdx;
 import com.github.daltonks.engine.Engine;
 import com.github.daltonks.engine.util.EngineSerializer;
 import com.github.daltonks.engine.util.Util;
 import com.github.daltonks.engine.world.EngineWorld;
 import com.github.daltonks.game.World.engineworlds.GameEngineWorld;
+import com.badlogic.gdx.files.FileHandle;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -26,24 +27,21 @@ public class SaveAndLoadHandler {
             return;
         }
 
-        String tmpFileName = "tmpsave" + saveSlot;
-        String saveFileName = "save" + saveSlot;
+        String tmpFileName = "saves/tmpsave" + saveSlot + ".sv";
+        String saveFileName = "saves/save" + saveSlot + ".sv";
 
-        FileOutputStream fos = Engine.INSTANCE.openFileOutput(tmpFileName, Context.MODE_PRIVATE);
-        DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(fos));
+        FileHandle tempHandler = Gdx.files.local(tmpFileName);
+        DataOutputStream dos = new DataOutputStream(tempHandler.write(false, 8192));
         saveData(dos);
         dos.close();
 
-        File tempFile = new File(Engine.INSTANCE.getFilesDir(), tmpFileName);
-        File saveFile = new File(Engine.INSTANCE.getFilesDir(), saveFileName);
-        if(saveFile.exists()) {
-            if(!saveFile.delete()) {
+        FileHandle saveHandler = Gdx.files.local(saveFileName);
+        if(saveHandler.exists()) {
+            if(!saveHandler.delete()) {
                 throw new IOException("Current save file unable to be deleted!");
             }
         }
-        if(!tempFile.renameTo(saveFile)) {
-            throw new IOException("Temp save file unable to be renamed!");
-        }
+        tempHandler.copyTo(saveHandler);
         System.out.println("Saving: " + Util.endTimer());
     }
 
@@ -60,11 +58,13 @@ public class SaveAndLoadHandler {
         EngineSerializer.getSerializer().write(dos, savePackage);
     }
 
-    public static void load() throws IOException {
+    public static boolean load() throws IOException {
         Util.startTimer();
-        FileInputStream fis = Engine.INSTANCE.openFileInput("save" + saveSlot);
-
-        DataInputStream dis = new DataInputStream(new BufferedInputStream(fis));
+        FileHandle saveHandler = Gdx.files.local("saves/save" + saveSlot + ".sv");
+        if(!saveHandler.exists()) {
+            return false;
+        }
+        DataInputStream dis = new DataInputStream(saveHandler.read(8192));
         int version = dis.readInt();
         SavePackage savePackage = EngineSerializer.getSerializer().read(dis, getSavePackageClass(version));
         while(version != CURRENT_VERSION) {
@@ -91,6 +91,7 @@ public class SaveAndLoadHandler {
         savePackage.onLoad();
         dis.close();
         System.out.println("Loading: " + Util.endTimer());
+        return true;
     }
 
     private static Class<? extends SavePackage> getSavePackageClass(int version) {

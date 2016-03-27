@@ -1,5 +1,6 @@
 package com.github.daltonks.game.World.saveandload;
 
+import com.badlogic.gdx.math.Quaternion;
 import com.github.daltonks.engine.Engine;
 import com.github.daltonks.engine.states.EngineState;
 import com.github.daltonks.engine.util.Pools;
@@ -68,7 +69,7 @@ public class SavePackage0 extends SavePackage implements ProguardKeeping {
         data.x = loc.x();
         data.y = loc.y();
         data.z = loc.z();
-        Quat4f quat = trans.getRotationQuatNew();
+        Quaternion quat = trans.getRotationQuatNew();
         data.qx = quat.x;
         data.qy = quat.y;
         data.qz = quat.z;
