@@ -7,8 +7,6 @@ import com.bulletphysics.linearmath.Transform;
 import com.github.daltonks.engine.states.inputevents.*;
 import com.github.daltonks.engine.util.interfaces.DeepRecycling;
 
-import javax.vecmath.AxisAngle4d;
-import javax.vecmath.Matrix3f;
 import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
 import java.lang.reflect.Array;

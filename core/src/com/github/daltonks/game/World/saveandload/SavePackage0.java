@@ -19,7 +19,6 @@ import com.github.daltonks.game.World.livingentities.LivingEntity;
 import com.github.daltonks.game.World.physics.CollisionMasks;
 import serialization.ProguardKeeping;
 
-import javax.vecmath.Quat4f;
 import java.io.*;
 import java.util.ArrayList;
 

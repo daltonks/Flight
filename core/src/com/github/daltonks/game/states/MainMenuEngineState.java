@@ -2,9 +2,6 @@ package com.github.daltonks.game.states;
 
 import com.github.daltonks.engine.Engine;
 import com.github.daltonks.engine.states.EngineState;
-import com.github.daltonks.engine.states.inputevents.ClickDownEvent;
-import com.github.daltonks.engine.states.inputevents.ClickUpEvent;
-import com.github.daltonks.engine.states.inputevents.DragEvent;
 import com.github.daltonks.engine.util.Color;
 import com.github.daltonks.engine.world.ui.HoverColorTextBoxUIBoundsComponent;
 import com.github.daltonks.engine.world.ui.TextBoxEntity;
@@ -13,7 +10,6 @@ import com.github.daltonks.game.World.items.base.Items;
 import com.github.daltonks.game.World.livingentities.LivingEntityInfos;
 import com.github.daltonks.game.World.saveandload.SaveAndLoadHandler;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class MainMenuEngineState extends MenuEngineState {

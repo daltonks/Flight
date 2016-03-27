@@ -2,7 +2,6 @@ package com.github.daltonks.game.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.math.Matrix4;
 import com.github.daltonks.engine.Engine;
 import com.github.daltonks.engine.states.EngineState;
 import com.github.daltonks.engine.states.Transition;
