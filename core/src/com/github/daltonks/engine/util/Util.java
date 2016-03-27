@@ -2,6 +2,7 @@
 
 package com.github.daltonks.engine.util;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 
 import java.lang.reflect.Field;
@@ -55,8 +56,11 @@ public class Util {
         }
     }
 
-    public static class ResourceAndShortenedName {
-        public String shortenedName;
-        public int resourceID;
+    public static String nativeInternalPath(String path) {
+        if(Gdx.app.getType() == Application.ApplicationType.Android) {
+            return path;
+        } else {
+            return "android/assets/" + path;
+        }
     }
 }

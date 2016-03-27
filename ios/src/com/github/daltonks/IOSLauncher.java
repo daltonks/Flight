@@ -1,8 +1,6 @@
 package com.github.daltonks;
 
-import com.badlogic.gdx.Gdx;
 import com.github.daltonks.engine.Engine;
-import com.github.daltonks.engine.states.inputevents.ComputerInputProcessor;
 import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.glkit.GLKViewDrawableMultisample;
 import org.robovm.apple.glkit.GLKViewDrawableStencilFormat;

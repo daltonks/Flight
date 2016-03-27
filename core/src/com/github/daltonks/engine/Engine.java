@@ -51,7 +51,10 @@ public class Engine implements ApplicationListener {
             Gdx.input.setInputProcessor(new ComputerInputProcessor());
         }
         try {
-            FileHandle handle = Gdx.files.getFileHandle("android/assets/data/data.pile", Files.FileType.Internal);
+            if(Gdx.app.getType() == Application.ApplicationType.Android) {
+
+            }
+            FileHandle handle = Gdx.files.getFileHandle(Util.nativeInternalPath("data/data.pile"), Files.FileType.Internal);
             dataPileInputStream = new DataInputStream(handle.read(16384));
 
             //Import SubActivities
@@ -125,12 +128,6 @@ public class Engine implements ApplicationListener {
 
         if(transition != null) {
             transition.draw(currentEngineState.getUICamera());
-        }
-    }
-
-    public void onTouchEvent() {
-        if(!isHaltingUpdates()) {
-
         }
     }
 

@@ -47,7 +47,7 @@ public class Camera implements Updatable {
 
     public Matrix4 getProjectionAndViewInverseMatrix() {
         if(dirtyPVInverse) {
-            projectionAndViewMatrix.set(projectionAndViewMatrix);
+            projectionAndViewMatrix.set(projectionMatrix.getMatrix());
             projectionAndViewMatrix.mul(viewMatrix.getMatrix());
 
             projectionAndViewInverseMatrix.set(projectionAndViewMatrix);

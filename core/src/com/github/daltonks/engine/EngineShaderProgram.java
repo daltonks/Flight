@@ -18,8 +18,8 @@ public class EngineShaderProgram {
 
     public static void init() {
         program = new ShaderProgram(
-                Gdx.files.getFileHandle("android/assets/data/vertexshader.txt", Files.FileType.Internal),
-                Gdx.files.getFileHandle("android/assets/data/fragmentshader.txt", Files.FileType.Internal)
+                Gdx.files.getFileHandle(Util.nativeInternalPath("data/vertexshader.txt"), Files.FileType.Internal),
+                Gdx.files.getFileHandle(Util.nativeInternalPath("data/fragmentshader.txt"), Files.FileType.Internal)
         );
 
         program.enableVertexAttribute("position");

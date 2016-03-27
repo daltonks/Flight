@@ -8,7 +8,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.stencil = 8;
-		config.samples = 4;
+		config.samples = 2;
         new LwjglApplication(new Engine(), config);
 	}
 }

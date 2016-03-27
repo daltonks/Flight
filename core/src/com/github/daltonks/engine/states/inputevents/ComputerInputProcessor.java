@@ -27,14 +27,14 @@ public class ComputerInputProcessor implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         InputQueue queue = Engine.INSTANCE.getCurrentSubActivity().getInputQueue();
-        queue.addClickDown(screenX, screenY, 0, button);
+        queue.addClickDown(screenX, screenY, pointer, button);
         return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         InputQueue queue = Engine.INSTANCE.getCurrentSubActivity().getInputQueue();
-        queue.addClickUp(0);
+        queue.addClickUp(pointer);
         return true;
     }
 
@@ -42,7 +42,7 @@ public class ComputerInputProcessor implements InputProcessor {
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         InputQueue queue = Engine.INSTANCE.getCurrentSubActivity().getInputQueue();
         DragEvent touchEvent = Pools.getMoveTouchEvent();
-        ClickTracker tracker = queue.getFingerTracker(0);
+        ClickTracker tracker = queue.getFingerTracker(pointer);
         if(tracker != null) {
             tracker.x = screenX;
             tracker.y = screenY;

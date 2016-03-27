@@ -102,6 +102,6 @@ public class TransformComponent extends Component implements Positionable {
 
     public void set(TransformComponent other) {
         loc.set(other.loc);
-        System.arraycopy(other.rotationMatrix, 0, rotationMatrix, 0, 16);
+        rotationMatrix.set(other.rotationMatrix);
     }
 }
