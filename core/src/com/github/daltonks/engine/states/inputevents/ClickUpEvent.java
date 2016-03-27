@@ -23,7 +23,7 @@ public class ClickUpEvent extends SinglePointerEvent {
             }
 
             if(!captured) {
-                engineState.onClickUp(this);
+                engineState.getInputHandler().onClickUp(this);
             }
         }
     }

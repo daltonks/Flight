@@ -16,7 +16,7 @@ import com.github.daltonks.engine.states.inputevents.*;
 import com.github.daltonks.engine.util.Pools;
 import com.github.daltonks.engine.states.inputevents.InputRunnable;
 
-public class AndroidLauncher extends AndroidApplication implements View.OnKeyListener, View.OnTouchListener {
+public class AndroidLauncher extends AndroidApplication implements View.OnTouchListener {
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,7 +25,6 @@ public class AndroidLauncher extends AndroidApplication implements View.OnKeyLis
 		config.numSamples = 2;
 		config.hideStatusBar = true;
 		initialize(new Engine(), config);
-        ((AndroidGraphics) Gdx.graphics).getView().setOnKeyListener(this);
         ((AndroidGraphics) Gdx.graphics).getView().setOnTouchListener(this);
 	}
 
@@ -77,11 +76,6 @@ public class AndroidLauncher extends AndroidApplication implements View.OnKeyLis
             }
         }
         return true;
-    }
-
-    @Override
-    public boolean onKey(View view, int i, KeyEvent keyEvent) {
-        return false;
     }
 
     @Override

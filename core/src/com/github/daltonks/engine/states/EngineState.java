@@ -13,14 +13,15 @@ import com.github.daltonks.engine.world.ui.UIEntity;
 
 import java.util.ArrayList;
 
-public abstract class EngineState implements StateListener, EngineInputProcessor {
+public abstract class EngineState<T extends EngineWorld> implements StateListener {
     private short id;
     private int currentEntityID = 0;
     private String name;
     private Camera uiCamera;
+    private EngineInputHandler inputHandler;
     private EventSystemContainer eventSystemContainer = new EventSystemContainer();
     private InputQueue inputQueue;
-    private EngineWorld engineWorld;
+    private T engineWorld;
     private SortedList<UIEntity> uiEntities = new SortedList<UIEntity>();
     private ArrayList<Integer> deletedEntityIDs = new ArrayList<Integer>();
 
@@ -32,12 +33,14 @@ public abstract class EngineState implements StateListener, EngineInputProcessor
         Pools.recycle(loc);
         uiCamera.getViewMatrix().setLocation(getStartingUICameraOffset());
         inputQueue = new InputQueue(this);
+        inputHandler = new EngineInputHandler(this);
     }
 
     public abstract void beforeModelGeneration();
     protected abstract Vec3d getStartingUICameraOffset();
 
     public void update(double delta) {
+        inputHandler.update(this, delta);
         inputQueue.update();
 
         ArrayList<UIEntity> underlying = uiEntities.getUnderlyingList();
@@ -118,40 +121,15 @@ public abstract class EngineState implements StateListener, EngineInputProcessor
         return id;
     }
 
-    //Cross-platform
-    public void onClickDown(ClickDownEvent event) {
-        engineWorld.onClickDown(event);
-    }
-    public void onDrag(DragEvent event) {
-        engineWorld.onDrag(event);
-    }
-    public void onClickUp(ClickUpEvent event) {
-        engineWorld.onClickUp(event);
-    }
-
-    //Only computer
-    public void onKeyDown(int keycode) {
-        engineWorld.onKeyDown(keycode);
-    }
-    public void onKeyUp(int keycode) {
-        engineWorld.onKeyUp(keycode);
-    }
-    public void onKeyTyped(char character) {
-        engineWorld.onKeyTyped(character);
-    }
-    public void onScrolled(int amount) {
-        engineWorld.onScrolled(amount);
-    }
-
     public void recycleEntityID(int id) {
         deletedEntityIDs.add(id);
     }
 
-    public void setEngineWorld(EngineWorld engineWorld) {
+    public void setEngineWorld(T engineWorld) {
         this.engineWorld = engineWorld;
     }
 
-    public EngineWorld getEngineWorld() {
+    public T getEngineWorld() {
         return engineWorld;
     }
 
@@ -161,6 +139,14 @@ public abstract class EngineState implements StateListener, EngineInputProcessor
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setInputHandler(EngineInputHandler handler) {
+        this.inputHandler = handler;
+    }
+
+    public EngineInputHandler getInputHandler() {
+        return inputHandler;
     }
 
     public String getName() {

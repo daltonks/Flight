@@ -1,6 +1,8 @@
 package com.github.daltonks.game.World.engineworlds;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.github.daltonks.engine.states.EngineState;
 import com.github.daltonks.engine.states.inputevents.ClickDownEvent;
@@ -164,34 +166,6 @@ public class GameEngineWorld extends SpaceEngineWorld {
         } else {
             super.removeEntity(entity);
         }
-    }
-
-    @Override
-    public void onClickDown(ClickDownEvent event) {
-
-    }
-
-    private static float turnDiv = 80;
-    @Override
-    public void onDrag(DragEvent event) {
-        Vec3d throttle = Pools.getVec3d().set(0, 0, 0);
-        for(int i = 0; i < event.getClickTrackers().size(); i++) {
-            ClickTracker tracker = event.getClickTrackers().get(i);
-            if(tracker.startingX <= Gdx.graphics.getWidth() / 2) {
-                //Roll if on left side of screen
-                throttle.add(-tracker.getDeltaY() / turnDiv, tracker.getDeltaX() / turnDiv, 0);
-            } else {
-                //Yaw if on right side of screen
-                throttle.add(-tracker.getDeltaY() / turnDiv, 0, -tracker.getDeltaX() / turnDiv);
-            }
-        }
-        player.getModelComponent().getRigidBody().applyLocalTorque(throttle);
-        Pools.recycle(throttle);
-    }
-
-    @Override
-    public void onClickUp(ClickUpEvent event) {
-
     }
 
     @Override

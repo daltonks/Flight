@@ -2,6 +2,7 @@ package com.github.daltonks.game.states;
 
 import com.github.daltonks.engine.util.Vec3d;
 import com.github.daltonks.game.World.engineworlds.MapEngineWorld;
+import com.github.daltonks.game.states.inputhandlers.MapInputHandler;
 
 public class MapEngineState extends ReturnToGameEngineState {
 
@@ -15,6 +16,7 @@ public class MapEngineState extends ReturnToGameEngineState {
         MapEngineWorld engineWorld = new MapEngineWorld(this);
         setEngineWorld(engineWorld);
         engineWorld.construct();
+        this.setInputHandler(new MapInputHandler(this));
     }
 
     @Override

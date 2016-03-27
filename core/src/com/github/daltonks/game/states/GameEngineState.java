@@ -2,11 +2,14 @@
 
 package com.github.daltonks.game.states;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.github.daltonks.engine.Engine;
 import com.github.daltonks.engine.states.EngineState;
 import com.github.daltonks.engine.util.Color;
+import com.github.daltonks.engine.util.Pools;
 import com.github.daltonks.engine.util.Vec3d;
 import com.github.daltonks.engine.world.models.Models;
 import com.github.daltonks.engine.world.ui.TextBoxEntity;
@@ -20,12 +23,13 @@ import com.github.daltonks.game.World.livingentities.Player;
 import com.github.daltonks.game.World.models.StarGenerator;
 import com.github.daltonks.game.World.saveandload.SaveAndLoadHandler;
 import com.github.daltonks.game.World.ui.JoystickBodyBounds;
+import com.github.daltonks.game.states.inputhandlers.GameInputHandler;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameEngineState extends EngineState {
-    public static TextBoxEntity debugText;
+    private static TextBoxEntity debugText;
     public static UIEntity joystick, joystickBody;
 	private static ItemSlot[] activeInventorySlots = new ItemSlot[Finals.NUM_OF_ACTIVE_INVENTORY_SLOTS];
 
@@ -36,6 +40,7 @@ public class GameEngineState extends EngineState {
 
     @Override
     public void init() {
+        this.setInputHandler(new GameInputHandler(this));
         CursorDrawing.init();
 
         UIEntity menuButton = new UIEntity(this, Models.get("ingamemenubutton"));
@@ -48,14 +53,16 @@ public class GameEngineState extends EngineState {
         menuButton.glueTo(UIEntity.Glue.UP, UIEntity.Glue.LEFT, 0, 0);
         addUIEntity(menuButton);
 
-        joystickBody = new UIEntity(this, Models.get("joystickbody"));
-        joystickBody.setUIBoundsComponent(new JoystickBodyBounds(joystickBody));
-        joystickBody.glueTo(UIEntity.Glue.LEFT, UIEntity.Glue.DOWN, 0, 0);
-        //joystickBody.glueTo(UIEntity.Glue.DOWN, (Finals.NUM_OF_ACTIVE_INVENTORY_SLOTS - sub) * slotWidth, 0);
-        addUIEntity(joystickBody);
+        if(Gdx.app.getType() == Application.ApplicationType.Android) {
+            joystickBody = new UIEntity(this, Models.get("joystickbody"));
+            joystickBody.setUIBoundsComponent(new JoystickBodyBounds(joystickBody));
+            joystickBody.glueTo(UIEntity.Glue.LEFT, UIEntity.Glue.DOWN, 0, 0);
+            //joystickBody.glueTo(UIEntity.Glue.DOWN, (Finals.NUM_OF_ACTIVE_INVENTORY_SLOTS - sub) * slotWidth, 0);
+            addUIEntity(joystickBody);
 
-        joystick = new UIEntity(this, Models.get("joystick"));
-        addUIEntity(joystick);
+            joystick = new UIEntity(this, Models.get("joystick"));
+            addUIEntity(joystick);
+        }
 
         debugText = new TextBoxEntity(this, 0, 0, 0, " ", 500, .2f, Color.PLAYER_BLUE);
         debugText.glueTo(UIEntity.Glue.UP, 0, 0);
@@ -63,8 +70,9 @@ public class GameEngineState extends EngineState {
     }
 
     public void onEnterState() {
+        Gdx.input.setCursorCatched(true);
         super.onEnterState();
-        resetThrottle();
+        GameInputHandler.resetThrottle();
 
         //inventory slots
         float sub = Finals.NUM_OF_ACTIVE_INVENTORY_SLOTS / 2;
@@ -88,9 +96,14 @@ public class GameEngineState extends EngineState {
         }
     }
 
+    public void onLeaveState() {
+        super.onLeaveState();
+        Gdx.input.setCursorCatched(false);
+    }
+
     public void onNewSurfaceDimensions(int width, int height) {
         super.onNewSurfaceDimensions(width, height);
-        resetThrottle();
+        GameInputHandler.resetThrottle();
         CursorDrawing.updateCircleRadius(this);
     }
 
@@ -119,17 +132,6 @@ public class GameEngineState extends EngineState {
     public void resetEngineWorld() {
         setEngineWorld(new GameEngineWorld(this));
         getEngineWorld().construct();
-    }
-
-    public static void resetThrottle() {
-        joystick.getTransformComponent().setLocation(joystickBody.getTransformComponent().getLocation());
-    }
-
-    public static Vec3d getThrottleNew() {
-        Vec3d throttle = joystick.getTransformComponent().getLocation().clone();
-        throttle.sub(joystickBody.getTransformComponent().getLocation());
-        throttle.div(joystickBody.getModelComponent().getRadius());
-        return throttle;
     }
 
     public boolean onBackPressed() {

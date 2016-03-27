@@ -11,7 +11,7 @@ import com.github.daltonks.engine.states.EngineState;
 import com.github.daltonks.engine.states.inputevents.ClickDownEvent;
 import com.github.daltonks.engine.states.inputevents.ClickUpEvent;
 import com.github.daltonks.engine.states.inputevents.DragEvent;
-import com.github.daltonks.engine.states.inputevents.EngineInputProcessor;
+import com.github.daltonks.engine.states.inputevents.EngineInputHandler;
 import com.github.daltonks.engine.util.Pools;
 import com.github.daltonks.engine.util.SortedList;
 import com.github.daltonks.engine.util.Vec3d;
@@ -26,7 +26,7 @@ import com.github.daltonks.engine.world.physics.PhysicsWorld;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public abstract class EngineWorld implements StateListener, EngineInputProcessor {
+public abstract class EngineWorld implements StateListener {
     private boolean initialized = false;
     private EngineState engineState;
     protected Camera camera;
@@ -211,30 +211,5 @@ public abstract class EngineWorld implements StateListener, EngineInputProcessor
 
     public EngineState getEngineState() {
         return engineState;
-    }
-
-    //Cross-platform
-    public void onClickDown(ClickDownEvent event) {
-
-    }
-    public void onDrag(DragEvent event) {
-
-    }
-    public void onClickUp(ClickUpEvent event) {
-
-    }
-
-    //Only computer
-    public void onKeyDown(int keycode) {
-
-    }
-    public void onKeyUp(int keycode) {
-
-    }
-    public void onKeyTyped(char character) {
-
-    }
-    public void onScrolled(int amount) {
-
     }
 }

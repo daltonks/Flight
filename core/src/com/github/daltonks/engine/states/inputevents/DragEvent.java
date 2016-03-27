@@ -46,7 +46,7 @@ public class DragEvent implements InputRunnable, DeepRecycling {
             }
         }
         if(!clickTrackers.isEmpty()) {
-            engineState.onDrag(this);
+            engineState.getInputHandler().onDrag(this);
         }
     }
 

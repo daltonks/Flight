@@ -3,23 +3,18 @@ package com.github.daltonks.game.World.engineworlds;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.github.daltonks.engine.states.EngineState;
-import com.github.daltonks.engine.states.inputevents.ClickDownEvent;
-import com.github.daltonks.engine.states.inputevents.ClickTracker;
-import com.github.daltonks.engine.states.inputevents.DragEvent;
-import com.github.daltonks.engine.states.inputevents.ClickUpEvent;
 import com.github.daltonks.engine.util.Color;
 import com.github.daltonks.engine.util.Pools;
 import com.github.daltonks.engine.util.Vec3d;
 import com.github.daltonks.engine.world.camera.FocusInDirectionCameraMode;
-import com.github.daltonks.engine.world.camera.ViewMatrix;
 import com.github.daltonks.engine.world.entityComponent.components.transformComponents.TransformComponent;
 import com.github.daltonks.engine.world.entityComponent.entities.base.ModelEntity;
 import com.github.daltonks.engine.world.models.Models;
 import com.github.daltonks.game.states.CursorDrawing;
 
-import java.util.LinkedList;
-
 public class MapEngineWorld extends SpaceEngineWorld {
+
+    public static double MIN_CAMERA_Z = 1, MAX_CAMERA_Z = 1000000;
 
     private ModelEntity paperPlane;
 
@@ -51,52 +46,12 @@ public class MapEngineWorld extends SpaceEngineWorld {
     }
 
     @Override
-    public void onClickDown(ClickDownEvent event) {
-
-    }
-
-    private static double mapMoveSpeed = .002;
-    private static double minZ = 1, maxZ = 1000000;
-    @Override
-    public void onDrag(DragEvent event) {
-        LinkedList<ClickTracker> clickTrackers = event.getClickTrackers();
-        Vec3d cameraLocation = getCamera().getViewMatrix().getLocation();
-        double speed = mapMoveSpeed * cameraLocation.z();
-        ViewMatrix viewMatrix = getCamera().getViewMatrix();
-        if(clickTrackers.size() == 1) {
-            ClickTracker clickTracker = clickTrackers.get(0);
-            Vec3d loc = cameraLocation.clone();
-            loc.add(-clickTracker.getDeltaX() * speed, clickTracker.getDeltaY() * speed, 0);
-            viewMatrix.setLocation(loc);
-            Pools.recycle(loc);
-        } else {
-            double pinchDelta = event.getPinchDelta();
-            double z = cameraLocation.z() - (pinchDelta * speed);
-            if(z < minZ) {
-                z = minZ;
-            } else if(z > maxZ) {
-                z = maxZ;
-            }
-
-            Vec3d loc = cameraLocation.clone();
-            loc.z(z);
-            viewMatrix.setLocation(loc);
-            Pools.recycle(loc);
-        }
-    }
-
-    @Override
-    public void onClickUp(ClickUpEvent event) {
-
-    }
-
-    @Override
     public void onEnterState() {
         TransformComponent playerTransform = GameEngineWorld.INSTANCE.getPlayer().getTransformComponent();
         Vec3d playerLoc = playerTransform.getLocation();
         paperPlane.getTransformComponent().set(playerTransform);
         Vec3d camLoc = Pools.getVec3d();
-        camLoc.set(playerLoc.x(), playerLoc.y(), Math.max(minZ, playerLoc.z() + 10000));
+        camLoc.set(playerLoc.x(), playerLoc.y(), Math.max(MIN_CAMERA_Z, playerLoc.z() + 10000));
         getCamera().getViewMatrix().setLocation(camLoc);
         Pools.recycle(camLoc);
     }

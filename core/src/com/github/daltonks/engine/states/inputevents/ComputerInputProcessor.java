@@ -1,26 +1,28 @@
 package com.github.daltonks.engine.states.inputevents;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.github.daltonks.engine.Engine;
 import com.github.daltonks.engine.util.Pools;
+import com.github.daltonks.engine.util.Util;
 
 public class ComputerInputProcessor implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        Engine.INSTANCE.getCurrentSubActivity().onKeyDown(keycode);
+        Engine.INSTANCE.getCurrentSubActivity().getInputHandler().onKeyDown(keycode);
         return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        Engine.INSTANCE.getCurrentSubActivity().onKeyUp(keycode);
+        Engine.INSTANCE.getCurrentSubActivity().getInputHandler().onKeyUp(keycode);
         return true;
     }
 
     @Override
     public boolean keyTyped(char character) {
-        Engine.INSTANCE.getCurrentSubActivity().onKeyTyped(character);
+        Engine.INSTANCE.getCurrentSubActivity().getInputHandler().onKeyTyped(character);
         return true;
     }
 
@@ -54,15 +56,15 @@ public class ComputerInputProcessor implements InputProcessor {
         return true;
     }
 
-    //Not used, because it doesn't work on iOS
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
+        Engine.INSTANCE.getCurrentSubActivity().getInputHandler().onMouseMove(Gdx.input.getDeltaX(), Gdx.input.getDeltaY());
         return true;
     }
 
     @Override
     public boolean scrolled(int amount) {
-        Engine.INSTANCE.getCurrentSubActivity().onScrolled(amount);
+        Engine.INSTANCE.getCurrentSubActivity().getInputHandler().onScrolled(amount);
         return true;
     }
 }

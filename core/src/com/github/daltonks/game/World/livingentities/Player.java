@@ -11,6 +11,7 @@ import com.github.daltonks.engine.world.physics.CollisionHandler;
 import com.github.daltonks.game.World.physics.CollisionMasks;
 import com.github.daltonks.game.datacompressor.LivingEntityInfo;
 import com.github.daltonks.game.states.GameEngineState;
+import com.github.daltonks.game.states.inputhandlers.GameInputHandler;
 
 public class Player extends LivingEntity {
     private static LivingEntityInfo planeEntityInfo = LivingEntityInfos.getInfo(Models.get("plane"));
@@ -30,7 +31,7 @@ public class Player extends LivingEntity {
     public void update(EngineState engineState, double delta) {
         super.update(engineState, delta);
         Vec3d vec = Pools.getVec3d();
-        Vec3d throttle = GameEngineState.getThrottleNew();
+        Vec3d throttle = GameInputHandler.getThrottleNew();
         vec.set(throttle.x() * planeEntityInfo.forwardForceMax * delta, throttle.y() * planeEntityInfo.forwardForceMax * delta, 0);
         getModelComponent().getRigidBody().applyLocalForce(vec);
         Pools.recycle(vec);
