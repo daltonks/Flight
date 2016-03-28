@@ -19,9 +19,7 @@ public class ModelConverter extends Converter {
         File[] plyFiles = new File(inputDirectory + "plymodels/").listFiles();
         for(File inputFile : plyFiles) {
             String name = inputFile.getName().substring(0, inputFile.getName().lastIndexOf("."));
-            ModelData modelData;
-
-            modelData = new ModelData(name);
+            ModelData modelData = new ModelData(name);
             modelData.vertices = new ArrayList<>();
             models.put(name, modelData);
 

@@ -62,7 +62,7 @@ public class CursorDrawing {
             posInView.z(0);
             posInView.normalize();
             pointedCursor.getTransformComponent().setLocation(posInView.x() * cursorCircleRadius, posInView.y() * cursorCircleRadius, 0);
-            pointedCursor.getTransformComponent().setRotation(0, 0, -(float) Math.toDegrees(Math.atan2(posInView.y(), posInView.x())) + 90);
+            pointedCursor.getTransformComponent().setRotation(0, 0, (float) Math.toDegrees(Math.atan2(posInView.y(), posInView.x())) - 90);
             float minScale = .12f;
             float maxScale = .4f;
             float distMult = .00036f;

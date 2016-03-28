@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.github.daltonks.engine.Engine;
 import com.github.daltonks.engine.states.EngineState;
 import com.github.daltonks.engine.util.Color;
-import com.github.daltonks.engine.util.Pools;
 import com.github.daltonks.engine.util.Vec3d;
 import com.github.daltonks.engine.world.models.Models;
 import com.github.daltonks.engine.world.ui.TextBoxEntity;

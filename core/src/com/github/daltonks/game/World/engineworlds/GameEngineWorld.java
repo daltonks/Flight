@@ -1,14 +1,8 @@
 package com.github.daltonks.game.World.engineworlds;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.github.daltonks.engine.states.EngineState;
-import com.github.daltonks.engine.states.inputevents.ClickDownEvent;
-import com.github.daltonks.engine.states.inputevents.ClickTracker;
-import com.github.daltonks.engine.states.inputevents.DragEvent;
-import com.github.daltonks.engine.states.inputevents.ClickUpEvent;
 import com.github.daltonks.engine.util.*;
 import com.github.daltonks.engine.world.camera.SwingingFollowCameraMode;
 import com.github.daltonks.engine.world.entityComponent.entities.base.Entity;
@@ -39,6 +33,17 @@ public class GameEngineWorld extends SpaceEngineWorld {
         Player player = initPlayer(-167125, 279838 + 4000, 44644, 0, 0, 1, 0);
         player.setInventory(new Inventory(player, 10));
         Items.BASIC_BULLET_SHOOTER.addToInventory(player, 1);
+
+        Vec3d loc = EngineMath.getRandomPointOnSphereSurfaceNew(3500);
+        loc.add(player.getTransformComponent().getLocation());
+        AIEntity enemy = new AIEntity(
+                getEngineState(), loc.x(), loc.y(), loc.z(),
+                0, 1, 0, 0, Models.get("plane"), CollisionMasks.ENEMY, null);
+
+        enemy.setInventory(new Inventory(enemy, 1));
+        addEntity(enemy);
+        Pools.recycle(loc);
+        enemyAccum = 0;
     }
 
     double enemyAccum = 0;
@@ -55,6 +60,7 @@ public class GameEngineWorld extends SpaceEngineWorld {
 
         enemyAccum += delta;
         if(enemyAccum >= 15) {
+            /*
             Vec3d loc = EngineMath.getRandomPointOnSphereSurfaceNew(3500);
             loc.add(player.getTransformComponent().getLocation());
             AIEntity enemy = new AIEntity(
@@ -64,7 +70,7 @@ public class GameEngineWorld extends SpaceEngineWorld {
             enemy.setInventory(new Inventory(enemy, 1));
             addEntity(enemy);
             Pools.recycle(loc);
-            enemyAccum = 0;
+            enemyAccum = 0;*/
         }
     }
 
