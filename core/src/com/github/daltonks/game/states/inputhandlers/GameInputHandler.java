@@ -7,6 +7,8 @@ import com.github.daltonks.engine.states.EngineState;
 import com.github.daltonks.engine.states.inputevents.*;
 import com.github.daltonks.engine.util.Pools;
 import com.github.daltonks.engine.util.Vec3d;
+import com.github.daltonks.engine.world.camera.CameraMode;
+import com.github.daltonks.engine.world.camera.SwingingFollowCameraMode;
 import com.github.daltonks.game.states.GameEngineState;
 
 public class GameInputHandler extends EngineInputHandler<GameEngineState> {
@@ -19,35 +21,64 @@ public class GameInputHandler extends EngineInputHandler<GameEngineState> {
 
     }
 
-    private static float turnDiv = 80;
     @Override
     public void onDrag(DragEvent event) {
-        Vec3d throttle = Pools.getVec3d().set(0, 0, 0);
         for(int i = 0; i < event.getClickTrackers().size(); i++) {
             ClickTracker tracker = event.getClickTrackers().get(i);
-            boolean roll;
-            if(Gdx.app.getType() == Application.ApplicationType.Android) {
-                //Roll if on left side of screen
-                roll = tracker.startingX <= Gdx.graphics.getWidth() / 2;
+            if (Gdx.app.getType() == Application.ApplicationType.Android) {
+                //Yaw if on right side of screen
+                if (tracker.startingX > Gdx.graphics.getWidth() / 2) {
+                    yaw((int) tracker.getDeltaX(), (int) tracker.getDeltaY());
+                } else {
+                    roll((int) tracker.getDeltaX(), (int) tracker.getDeltaY());
+                }
             } else {
-                roll = true;
-            }
-
-            if(roll) {
-                throttle.add(-tracker.getDeltaY() / turnDiv, tracker.getDeltaX() / turnDiv, 0);
-            } else {
-                throttle.add(-tracker.getDeltaY() / turnDiv, 0, -tracker.getDeltaX() / turnDiv);
+                roll((int) tracker.getDeltaX(), (int) tracker.getDeltaY());
             }
         }
+    }
+
+    public void onMouseMove(int deltaX, int deltaY) {
+        if(!Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+            yaw(deltaX, deltaY);
+        } else {
+            roll(deltaX, deltaY);
+        }
+    }
+
+    private static float turnDiv = 80;
+    private void roll(int deltaX, int deltaY) {
+        Vec3d throttle = Pools.getVec3d().set(0, 0, 0);
+        throttle.add(-deltaY / turnDiv, deltaX / turnDiv, 0);
         getEngineState().getEngineWorld().getPlayer().getModelComponent().getRigidBody().applyLocalTorque(throttle);
         Pools.recycle(throttle);
     }
 
-    public void onMouseMove(int deltaX, int deltaY) {
-        Vec3d throttle = Pools.getVec3d();
-        throttle.set(-deltaY / turnDiv, 0, -deltaX / turnDiv);
+    private void yaw(int deltaX, int deltaY) {
+        Vec3d throttle = Pools.getVec3d().set(0, 0, 0);
+        throttle.add(-deltaY / turnDiv, 0, -deltaX / turnDiv);
         getEngineState().getEngineWorld().getPlayer().getModelComponent().getRigidBody().applyLocalTorque(throttle);
         Pools.recycle(throttle);
+    }
+
+    private static float distancePerScroll = 5;
+    private static float minOffsetLength = 30;
+    private static float maxOffsetLength = 100;
+    public void onScroll(int amount) {
+        CameraMode cameraMode = getEngineState().getEngineWorld().getCamera().getCameraMode();
+        SwingingFollowCameraMode swingingMode = (SwingingFollowCameraMode) cameraMode;
+        Vec3d offset = swingingMode.getOffset();
+        double length = offset.length();
+        float move = distancePerScroll * amount;
+        double newLength;
+        if(length + move < minOffsetLength) {
+            newLength = minOffsetLength;
+        } else if(length + move > maxOffsetLength) {
+            newLength = maxOffsetLength;
+        } else {
+            newLength = length + move;
+        }
+        offset.setLength(newLength);
     }
 
     public static Vec3d getThrottleNew() {

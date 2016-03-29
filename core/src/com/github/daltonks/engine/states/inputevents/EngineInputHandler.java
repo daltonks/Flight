@@ -23,8 +23,8 @@ public class EngineInputHandler<T extends EngineState> implements Updatable {
     public void onClickUp(ClickUpEvent event){}
     public void onKeyDown(int keycode){}
     public void onKeyUp(int keycode){}
-    public void onKeyTyped(char character){}
-    public void onScrolled(int amount){}
+    public void onKeyType(char character){}
+    public void onScroll(int amount){}
 
     public T getEngineState() {
         return state;

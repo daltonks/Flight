@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.github.daltonks.engine.Engine;
 import com.github.daltonks.engine.util.Pools;
-import com.github.daltonks.engine.util.Util;
 
 public class ComputerInputProcessor implements InputProcessor {
 
@@ -22,7 +21,7 @@ public class ComputerInputProcessor implements InputProcessor {
 
     @Override
     public boolean keyTyped(char character) {
-        Engine.INSTANCE.getCurrentSubActivity().getInputHandler().onKeyTyped(character);
+        Engine.INSTANCE.getCurrentSubActivity().getInputHandler().onKeyType(character);
         return true;
     }
 
@@ -64,7 +63,7 @@ public class ComputerInputProcessor implements InputProcessor {
 
     @Override
     public boolean scrolled(int amount) {
-        Engine.INSTANCE.getCurrentSubActivity().getInputHandler().onScrolled(amount);
+        Engine.INSTANCE.getCurrentSubActivity().getInputHandler().onScroll(amount);
         return true;
     }
 }

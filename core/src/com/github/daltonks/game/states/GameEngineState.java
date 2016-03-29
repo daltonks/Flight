@@ -27,7 +27,7 @@ import com.github.daltonks.game.states.inputhandlers.GameInputHandler;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GameEngineState extends EngineState {
+public class GameEngineState extends EngineState<GameEngineWorld> {
     private static TextBoxEntity debugText;
     public static UIEntity joystick, joystickBody;
 	private static ItemSlot[] activeInventorySlots = new ItemSlot[Finals.NUM_OF_ACTIVE_INVENTORY_SLOTS];
@@ -150,9 +150,5 @@ public class GameEngineState extends EngineState {
     @Override
     protected Vec3d getStartingUICameraOffset() {
         return new Vec3d(0, 0, 5);
-    }
-
-    public GameEngineWorld getEngineWorld() {
-        return (GameEngineWorld) super.getEngineWorld();
     }
 }

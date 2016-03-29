@@ -149,7 +149,7 @@ public class GameEngineWorld extends SpaceEngineWorld {
         cameraMode = new SwingingFollowCameraMode(
                 getCamera(),
                 player.getTransformComponent(),
-                new Vec3d(0, -30, 5), new Vec3d(0, 0, 4),
+                new Vec3d(0, -30, 5), new Vec3d(0, 0, 8),
                 .4, .4);
         getCamera().setCameraMode(cameraMode);
 
