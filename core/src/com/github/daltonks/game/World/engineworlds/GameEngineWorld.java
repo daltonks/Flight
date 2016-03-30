@@ -2,6 +2,7 @@ package com.github.daltonks.game.World.engineworlds;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.github.daltonks.engine.EngineShaderProgram;
 import com.github.daltonks.engine.states.EngineState;
 import com.github.daltonks.engine.util.*;
 import com.github.daltonks.engine.world.camera.SwingingFollowCameraMode;
@@ -47,7 +48,14 @@ public class GameEngineWorld extends SpaceEngineWorld {
     }
 
     double enemyAccum = 0;
+    double explodeAccum = 0;
     public void update(double delta) {
+        explodeAccum += delta / 2;
+        if(explodeAccum > 1) {
+            explodeAccum = 0;
+        }
+        EngineShaderProgram.setExplodeTime((float) explodeAccum);
+
         stepSimulation();
 
         ArrayList<LivingEntity> livingList = livingEntities.getUnderlyingList();

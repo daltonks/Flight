@@ -2,7 +2,6 @@ package com.github.daltonks;
 
 import android.os.Bundle;
 
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import com.badlogic.gdx.Gdx;
@@ -47,7 +46,7 @@ public class AndroidLauncher extends AndroidApplication implements View.OnTouchL
                 }
 
                 case MotionEvent.ACTION_MOVE: {
-                    DragEvent touchEvent = Pools.getMoveTouchEvent();
+                    DragEvent touchEvent = Pools.getDragEvent();
                     for(int i = 0; i < pointerCount; i++) {
                         ClickTracker tracker = queue.getFingerTracker(e.getPointerId(i));
                         if(tracker == null)

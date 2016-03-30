@@ -2,6 +2,7 @@ uniform vec3 sunPositionInView;
 uniform vec3 colorMult;
 uniform mat4 MVPMatrix;
 uniform mat4 MVMatrix;
+uniform float explodeTime;
 
 attribute vec3 position;
 attribute vec3 colorIn;
@@ -32,8 +33,17 @@ void main() {
     //    diffuse *= (1.0 - angleLookingAtSun);
     //}
 
-    colorOut = vec4(colorIn, 1) * vec4(colorMult, 1) * diffuse;
-    gl_Position = MVPMatrix * vec4(position, 1);
+    vec4 addPosition = vec4(0.0, 0.0, 0.0, 0.0);
+    float scalePosition = 1.0;
+    vec4 explodeColorMult = vec4(1.0, 1.0, 1.0, 1.0);
+    if(explodeTime > 0.0) {
+        addPosition = vec4(normal, 0) * (explodeTime * 9);
+        scalePosition = 1 - explodeTime;
+        explodeColorMult = vec4((1 - explodeTime) * 4 - 2, 1 - explodeTime, 1 - explodeTime, 1);
+    }
+
+    colorOut = vec4(colorIn, 1) * vec4(colorMult, 1) * explodeColorMult * diffuse;
+    gl_Position = MVPMatrix * (vec4(position, 1) * vec4(scalePosition, scalePosition, scalePosition, 1) + addPosition);
 
     //texCoordinateOut = texCoordinateIn;
 }

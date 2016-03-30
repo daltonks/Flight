@@ -22,7 +22,9 @@ public class ClickUpEvent extends SinglePointerEvent {
                 }
             }
 
-            if(!captured) {
+            if(captured) {
+                engineState.getInputHandler().onUICapturedClickUp(this);
+            } else {
                 engineState.getInputHandler().onClickUp(this);
             }
         }

@@ -147,7 +147,7 @@ public class Pools {
     //----------------------------------------------------------------------------------------------
 
     private static final ArrayList<DragEvent> dragEvents = new ArrayList<DragEvent>();
-    public static DragEvent getMoveTouchEvent() {
+    public static DragEvent getDragEvent() {
         return get(dragEvents, DragEvent.class);
     }
 

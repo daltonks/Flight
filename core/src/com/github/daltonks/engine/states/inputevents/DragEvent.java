@@ -14,6 +14,7 @@ public class DragEvent implements InputRunnable, DeepRecycling {
 
     @Override
     public void run(EngineState engineState) {
+        DragEvent capturedEvent = null;
         for(int i = 0; i < clickTrackers.size(); i++) {
             ClickTracker tracker = clickTrackers.get(i);
             if(tracker.parent.focusedUIEntity != null) {
@@ -40,7 +41,9 @@ public class DragEvent implements InputRunnable, DeepRecycling {
                     }
                 }
                 if(captured) {
-                    Pools.recycle(clickTrackers.remove(i));
+                    if(capturedEvent == null)
+                        capturedEvent = Pools.getDragEvent();
+                    capturedEvent.clickTrackers.add(clickTrackers.remove(i));
                     i--;
                 }
             }
@@ -48,6 +51,10 @@ public class DragEvent implements InputRunnable, DeepRecycling {
         if(!clickTrackers.isEmpty()) {
             engineState.getInputHandler().onDrag(this);
         }
+        if(capturedEvent != null) {
+            engineState.getInputHandler().onUICapturedDrag(capturedEvent);
+        }
+        Pools.recycle(capturedEvent);
     }
 
     public ClickTracker getFurthestLeft() {

@@ -28,7 +28,9 @@ public class ClickDownEvent extends SinglePointerEvent {
                 }
             }
         }
-        if(!captured) {
+        if(captured) {
+            engineState.getInputHandler().onUICapturedClickDown(this);
+        } else {
             engineState.getInputHandler().onClickDown(this);
         }
         Pools.recycle(worldLoc);

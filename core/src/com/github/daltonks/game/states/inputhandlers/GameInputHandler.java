@@ -17,8 +17,19 @@ public class GameInputHandler extends EngineInputHandler<GameEngineState> {
         super(state);
     }
 
+    @Override
     public void update(EngineState engineState, double delta) {
 
+    }
+
+    @Override
+    public void onClickDown(ClickDownEvent event) {
+        Gdx.input.setCursorCatched(true);
+    }
+
+    @Override
+    public void onUICapturedClickDown(ClickDownEvent event) {
+        Gdx.input.setCursorCatched(true);
     }
 
     @Override
@@ -38,11 +49,14 @@ public class GameInputHandler extends EngineInputHandler<GameEngineState> {
         }
     }
 
+    @Override
     public void onMouseMove(int deltaX, int deltaY) {
-        if(!Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-            yaw(deltaX, deltaY);
-        } else {
-            roll(deltaX, deltaY);
+        if(Gdx.input.isCursorCatched()) {
+            if(!Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                yaw(deltaX, deltaY);
+            } else {
+                roll(deltaX, deltaY);
+            }
         }
     }
 
@@ -64,12 +78,13 @@ public class GameInputHandler extends EngineInputHandler<GameEngineState> {
     private static float distancePerScroll = 5;
     private static float minOffsetLength = 30;
     private static float maxOffsetLength = 100;
+    @Override
     public void onScroll(int amount) {
         CameraMode cameraMode = getEngineState().getEngineWorld().getCamera().getCameraMode();
         SwingingFollowCameraMode swingingMode = (SwingingFollowCameraMode) cameraMode;
         Vec3d offset = swingingMode.getOffset();
         double length = offset.length();
-        float move = distancePerScroll * amount;
+        float move = distancePerScroll * Math.signum(amount);
         double newLength;
         if(length + move < minOffsetLength) {
             newLength = minOffsetLength;
@@ -79,6 +94,13 @@ public class GameInputHandler extends EngineInputHandler<GameEngineState> {
             newLength = length + move;
         }
         offset.setLength(newLength);
+    }
+
+    @Override
+    public void onKeyDown(int keycode){
+        if(keycode == Input.Keys.ESCAPE) {
+            Gdx.input.setCursorCatched(false);
+        }
     }
 
     public static Vec3d getThrottleNew() {

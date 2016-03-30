@@ -42,7 +42,7 @@ public class ComputerInputProcessor implements InputProcessor {
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         InputQueue queue = Engine.INSTANCE.getCurrentSubActivity().getInputQueue();
-        DragEvent touchEvent = Pools.getMoveTouchEvent();
+        DragEvent touchEvent = Pools.getDragEvent();
         ClickTracker tracker = queue.getFingerTracker(pointer);
         if(tracker != null) {
             tracker.x = screenX;

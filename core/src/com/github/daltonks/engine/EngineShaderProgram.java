@@ -14,6 +14,7 @@ public class EngineShaderProgram {
     private static int COLOR_MULT_3F_UNIFORM;
     private static int MVP_MATRIX_UNIFORM;
     private static int MV_MATRIX_UNIFORM;
+    private static int EXPLODE_TIME_1F_UNIFORM;
     private static ShaderProgram program;
 
     public static void init() {
@@ -32,6 +33,7 @@ public class EngineShaderProgram {
         MVP_MATRIX_UNIFORM = program.getUniformLocation("MVPMatrix");
         MV_MATRIX_UNIFORM = program.getUniformLocation("MVMatrix");
         COLOR_MULT_3F_UNIFORM = program.getUniformLocation("colorMult");
+        EXPLODE_TIME_1F_UNIFORM = program.getUniformLocation("explodeTime");
 
         Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
@@ -73,6 +75,10 @@ public class EngineShaderProgram {
 
     public static void setMVMatrix(float[] matrix) {
         program.setUniformMatrix4fv(MV_MATRIX_UNIFORM, matrix, 0, 16);
+    }
+
+    public static void setExplodeTime(float explodeTime) {
+        program.setUniformf(EXPLODE_TIME_1F_UNIFORM, explodeTime);
     }
 
     public static ShaderProgram getShaderProgram() {
