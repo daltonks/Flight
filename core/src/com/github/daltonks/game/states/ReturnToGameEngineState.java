@@ -6,7 +6,7 @@ import com.github.daltonks.engine.util.Pools;
 import com.github.daltonks.engine.util.Vec3d;
 import com.github.daltonks.engine.world.entityComponent.entities.base.Entity;
 import com.github.daltonks.game.World.engineworlds.GameEngineWorld;
-import com.github.daltonks.game.World.livingentities.Player;
+import com.github.daltonks.game.World.entities.livingentities.Player;
 
 import javax.vecmath.Vector3f;
 

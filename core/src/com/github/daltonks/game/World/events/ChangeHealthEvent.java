@@ -3,8 +3,8 @@ package com.github.daltonks.game.World.events;
 import com.github.daltonks.engine.Engine;
 import com.github.daltonks.engine.world.entityComponent.entities.base.Entity;
 import com.github.daltonks.engine.world.events.Event;
-import com.github.daltonks.game.World.livingentities.LivingEntity;
-import com.github.daltonks.game.World.livingentities.LivingEntityStats;
+import com.github.daltonks.game.World.entities.livingentities.LivingEntity;
+import com.github.daltonks.game.World.entities.livingentities.LivingEntityStats;
 
 public class ChangeHealthEvent extends Event {
     public int change;

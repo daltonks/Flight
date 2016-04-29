@@ -1,7 +1,7 @@
 package com.github.daltonks.game.World.items.base.itemstacks;
 
 import com.github.daltonks.game.World.items.base.Item;
-import com.github.daltonks.game.World.livingentities.LivingEntity;
+import com.github.daltonks.game.World.entities.livingentities.LivingEntity;
 
 public abstract class ConsumableItemStack extends ItemStack {
 

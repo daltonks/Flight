@@ -14,8 +14,8 @@ import com.github.daltonks.game.World.items.base.Item;
 import com.github.daltonks.game.World.items.base.Items;
 import com.github.daltonks.game.World.items.base.itemstacks.ConsumableItemStack;
 import com.github.daltonks.game.World.items.base.itemstacks.ItemStack;
-import com.github.daltonks.game.World.livingentities.AIEntity;
-import com.github.daltonks.game.World.livingentities.LivingEntity;
+import com.github.daltonks.game.World.entities.livingentities.AIEntity;
+import com.github.daltonks.game.World.entities.livingentities.LivingEntity;
 import com.github.daltonks.game.World.physics.CollisionMasks;
 import serialization.ProguardKeeping;
 

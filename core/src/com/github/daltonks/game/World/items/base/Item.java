@@ -3,7 +3,7 @@ package com.github.daltonks.game.World.items.base;
 import com.github.daltonks.engine.world.models.Model;
 import com.github.daltonks.engine.world.models.Models;
 import com.github.daltonks.game.World.items.base.itemstacks.ItemStack;
-import com.github.daltonks.game.World.livingentities.LivingEntity;
+import com.github.daltonks.game.World.entities.livingentities.LivingEntity;
 
 public abstract class Item implements Comparable<Item> {
     private short id;

@@ -7,7 +7,7 @@ import com.github.daltonks.engine.world.camera.Camera;
 import com.github.daltonks.engine.world.entityComponent.components.transformComponents.TransformComponent;
 import com.github.daltonks.engine.world.events.EventListener;
 import com.github.daltonks.game.World.items.base.Item;
-import com.github.daltonks.game.World.livingentities.LivingEntity;
+import com.github.daltonks.game.World.entities.livingentities.LivingEntity;
 
 import java.util.ArrayList;
 

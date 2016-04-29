@@ -7,7 +7,7 @@ import com.github.daltonks.engine.world.ui.HoverColorTextBoxUIBoundsComponent;
 import com.github.daltonks.engine.world.ui.TextBoxEntity;
 import com.github.daltonks.engine.world.ui.UIEntity;
 import com.github.daltonks.game.World.items.base.Items;
-import com.github.daltonks.game.World.livingentities.LivingEntityInfos;
+import com.github.daltonks.game.World.entities.livingentities.LivingEntityInfos;
 import com.github.daltonks.game.World.saveandload.SaveAndLoadHandler;
 
 import java.io.IOException;

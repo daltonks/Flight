@@ -4,7 +4,6 @@ package com.github.daltonks.game.states;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.github.daltonks.engine.Engine;
 import com.github.daltonks.engine.states.EngineState;
@@ -17,8 +16,8 @@ import com.github.daltonks.engine.world.ui.UIEntity;
 import com.github.daltonks.game.Finals;
 import com.github.daltonks.game.World.engineworlds.GameEngineWorld;
 import com.github.daltonks.game.World.items.base.ItemSlot;
-import com.github.daltonks.game.World.livingentities.LivingEntity;
-import com.github.daltonks.game.World.livingentities.Player;
+import com.github.daltonks.game.World.entities.livingentities.LivingEntity;
+import com.github.daltonks.game.World.entities.livingentities.Player;
 import com.github.daltonks.game.World.models.StarGenerator;
 import com.github.daltonks.game.World.saveandload.SaveAndLoadHandler;
 import com.github.daltonks.game.World.ui.JoystickBodyBounds;

@@ -2,6 +2,7 @@ package com.github.daltonks.game.World.engineworlds;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.bulletphysics.dynamics.DynamicsWorld;
 import com.github.daltonks.engine.EngineShaderProgram;
 import com.github.daltonks.engine.states.EngineState;
 import com.github.daltonks.engine.util.*;
@@ -10,9 +11,9 @@ import com.github.daltonks.engine.world.entityComponent.entities.base.Entity;
 import com.github.daltonks.engine.world.models.Models;
 import com.github.daltonks.game.World.items.base.Inventory;
 import com.github.daltonks.game.World.items.base.Items;
-import com.github.daltonks.game.World.livingentities.AIEntity;
-import com.github.daltonks.game.World.livingentities.LivingEntity;
-import com.github.daltonks.game.World.livingentities.Player;
+import com.github.daltonks.game.World.entities.livingentities.AIEntity;
+import com.github.daltonks.game.World.entities.livingentities.LivingEntity;
+import com.github.daltonks.game.World.entities.livingentities.Player;
 import com.github.daltonks.game.World.physics.CollisionMasks;
 
 import java.util.ArrayList;
@@ -48,14 +49,7 @@ public class GameEngineWorld extends SpaceEngineWorld {
     }
 
     double enemyAccum = 0;
-    double explodeAccum = 0;
     public void update(double delta) {
-        explodeAccum += delta / 2;
-        if(explodeAccum > 1) {
-            explodeAccum = 0;
-        }
-        EngineShaderProgram.setExplodeTime((float) explodeAccum);
-
         stepSimulation();
 
         ArrayList<LivingEntity> livingList = livingEntities.getUnderlyingList();
@@ -68,7 +62,6 @@ public class GameEngineWorld extends SpaceEngineWorld {
 
         enemyAccum += delta;
         if(enemyAccum >= 15) {
-            /*
             Vec3d loc = EngineMath.getRandomPointOnSphereSurfaceNew(3500);
             loc.add(player.getTransformComponent().getLocation());
             AIEntity enemy = new AIEntity(
@@ -78,7 +71,7 @@ public class GameEngineWorld extends SpaceEngineWorld {
             enemy.setInventory(new Inventory(enemy, 1));
             addEntity(enemy);
             Pools.recycle(loc);
-            enemyAccum = 0;*/
+            enemyAccum = 0;
         }
     }
 
@@ -180,6 +173,10 @@ public class GameEngineWorld extends SpaceEngineWorld {
         } else {
             super.removeEntity(entity);
         }
+    }
+
+    public void onSimulationTick(DynamicsWorld dynamicsWorld, float timeStep) {
+        cameraMode.onSimulationTick();
     }
 
     @Override

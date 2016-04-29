@@ -4,15 +4,15 @@ import com.github.daltonks.engine.Engine;
 import com.github.daltonks.engine.states.EngineState;
 import com.github.daltonks.engine.util.Pools;
 import com.github.daltonks.engine.util.Vec3d;
-import com.github.daltonks.engine.world.entityComponent.entities.LinearProjectileEntity;
 import com.github.daltonks.engine.world.entityComponent.entities.base.Entity;
 import com.github.daltonks.engine.world.models.Models;
 import com.github.daltonks.engine.world.physics.CollisionHandler;
+import com.github.daltonks.game.World.entities.LinearProjectileEntity;
 import com.github.daltonks.game.World.events.ChangeHealthEvent;
 import com.github.daltonks.game.World.items.base.Item;
 import com.github.daltonks.game.World.items.base.itemstacks.ItemStack;
 import com.github.daltonks.game.World.items.base.itemstacks.ToggleItemStack;
-import com.github.daltonks.game.World.livingentities.LivingEntity;
+import com.github.daltonks.game.World.entities.livingentities.LivingEntity;
 
 public class BasicBulletShooter extends Item {
     private static final float SPEED = .2f;
